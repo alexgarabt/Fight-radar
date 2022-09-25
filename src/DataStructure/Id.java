@@ -11,8 +11,12 @@ public class Id {
         return id;
     }
     public boolean equals(Id id1){
-        if((id1.getId().toUpperCase()).equals(this.getId().toUpperCase())) return true;
+        if((id1.getId()).equals(this.getId())) return true;
         return false;
+    }
+
+    public String toString(){
+        return id;
     }
 
 }

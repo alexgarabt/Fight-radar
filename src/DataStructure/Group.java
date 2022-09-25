@@ -15,6 +15,13 @@ public class Group {
         if(this.group==group.getGroup()) return true;
         return false;
     }
+    public void setGroup(boolean group){
+        this.group=group;
+    }
+    public String toString(){
+        if (group) return "true";
+        return "false";
+    }
 
 
 }

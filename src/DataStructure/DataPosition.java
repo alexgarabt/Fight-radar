@@ -12,7 +12,11 @@ public class DataPosition {
     public Id getId(){
         return id;
     }
-     public Position getPosition(){
+    public Position getPosition(){
         return position;
      }
+    public String toString(){
+        return id.toString()+", "+position.toString();
+    }
+
 }

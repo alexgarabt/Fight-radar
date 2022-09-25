@@ -21,4 +21,8 @@ public class DataUser extends DataPosition{
     public Group getGroup(){
         return group;
     }
+
+    public String toString(){
+        return super.toString()+", "+group.toString()+", "+neighbours.toString();
+    }
 }

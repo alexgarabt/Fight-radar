@@ -19,12 +19,16 @@ public class Position {
     }
 
     public boolean inZone(Position pos){
-        if(this.distance(pos)<4) return true;
+        if(this.distance(pos)<2) return true;
         return false;
     }
 
     public double distance(Position pos){
         return Math.sqrt((Math.pow((this.x-pos.getPositionX()), 2))+
                 (Math.pow((this.y-pos.getPositionY()), 2)));
+    }
+
+    public String toString(){
+        return "("+this.x+", "+this.y+")";
     }
 }

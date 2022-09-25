@@ -40,6 +40,16 @@ public class Neighbours {
         return neighbours.size();
     }
 
+    public String toString(){
+        String result ="[";
+        Id user;
+        for (Id i:neighbours){
+            result +=i.toString()+", ";
+        }
+        result+="]";
+        return result;
+    }
+
 
 
 }
