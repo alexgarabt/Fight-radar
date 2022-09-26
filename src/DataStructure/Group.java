@@ -1,6 +1,10 @@
 package DataStructure;
-
+/**
+ * Group class identify to what group the user belongs to.
+ * @version /26/09/2022/
+ */
 public class Group {
+
     private boolean group;
 
     public Group(boolean group){

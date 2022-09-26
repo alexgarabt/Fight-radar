@@ -1,7 +1,13 @@
 package DataStructure;
 import java.util.ArrayList;
 
+/**
+ * Neighbours class is used to represent a list of users.
+ * @see Id
+ * @version /26/09/2022/
+ */
 public class Neighbours {
+
 
     private ArrayList<Id> neighbours;
 

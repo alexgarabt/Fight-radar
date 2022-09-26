@@ -1,5 +1,11 @@
 package DataStructure;
 
+/**
+ * Class representation of simple information of one user.
+ * @see Id
+ * @see Position
+ * @version 1
+ */
 public class DataSimple {
     private Id id;
     private Position position;

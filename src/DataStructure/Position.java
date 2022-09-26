@@ -1,5 +1,10 @@
 package DataStructure;
 
+/**
+ * Position class identify the position of a user in a two-dimensional plane.
+ * @version /26/09/2022/
+ */
+
 public class Position {
 
     private double x;
@@ -24,6 +29,10 @@ public class Position {
     }
 
     public double distance(Position pos){
+        /**
+         * This function get the distance between to positions in a two-dimensional plane.
+         * |u1-u2| = sqrt((u1x-u2x)²+(u1y-u2y)²
+         */
         return Math.sqrt((Math.pow((this.x-pos.getPositionX()), 2))+
                 (Math.pow((this.y-pos.getPositionY()), 2)));
     }

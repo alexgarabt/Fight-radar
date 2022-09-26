@@ -1,4 +1,8 @@
 package DataStructure;
+/**
+ *Id class has the purpose of identifying each user in the data structure.
+ * @version /26/09/2022/
+ */
 
 public class Id {
     private String id;

@@ -1,11 +1,14 @@
 package DataStructure;
-
 import java.util.ArrayList;
 
+/**
+ *Class SimpleUserList is a List of Simple information of users.
+ * @see DataSimple
+ * @version /26/09/2022/
+ */
 public class SimpleUserList {
 
-    //private ArrayList<DataPosition> usersList;
-    public ArrayList<DataSimple> usersList;
+    private ArrayList<DataSimple> usersList;
 
     public SimpleUserList(){
         usersList = new ArrayList<DataSimple>();
