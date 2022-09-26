@@ -5,21 +5,21 @@ import java.util.ArrayList;
 public class SimpleUserList {
 
     //private ArrayList<DataPosition> usersList;
-    public ArrayList<DataPosition> usersList;
+    public ArrayList<DataSimple> usersList;
 
     public SimpleUserList(){
-        usersList = new ArrayList<DataPosition>();
+        usersList = new ArrayList<DataSimple>();
     }
 
-    public void setUsersList(ArrayList<DataPosition> userList){
+    public void setUsersList(ArrayList<DataSimple> userList){
         usersList=userList;
     }
 
-    public ArrayList<DataPosition> getUsersList() {
+    public ArrayList<DataSimple> getUsersList() {
         return usersList;
     }
 
-    public void addUser(DataPosition user){
+    public void addUser(DataSimple user){
         usersList.add(user);
     }
 
@@ -36,7 +36,7 @@ public class SimpleUserList {
     }
 
 
-    public DataPosition getUser(Id id){
+    public DataSimple getUser(Id id){
         int pos=indexUser(id);
         if (pos==-1){ return null;}
         return usersList.get(pos);
@@ -49,10 +49,10 @@ public class SimpleUserList {
     }
 
     public Neighbours getUsersInZone(Id id){
-        DataPosition user= getUser(id);
+        DataSimple user= getUser(id);
         Position position = user.getPosition();
         Neighbours neighbours = new Neighbours();
-        for (DataPosition userI: usersList){
+        for (DataSimple userI: usersList){
             Id idUserI= userI.getId();
             if(id.equals(idUserI)) continue;
             if(position.inZone(userI.getPosition())) neighbours.addId(idUserI);

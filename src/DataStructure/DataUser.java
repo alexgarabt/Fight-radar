@@ -1,6 +1,6 @@
 package DataStructure;
 
-public class DataUser extends DataPosition{
+public class DataUser extends DataSimple{
 
     private Neighbours neighbours;
     private Group group;

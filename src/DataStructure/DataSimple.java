@@ -1,10 +1,10 @@
 package DataStructure;
 
-public class DataPosition {
+public class DataSimple {
     private Id id;
     private Position position;
 
-    public DataPosition(Id id, Position position){
+    public DataSimple(Id id, Position position){
         this.id=id;
         this.position=position;
     }

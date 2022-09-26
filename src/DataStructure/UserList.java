@@ -49,10 +49,10 @@ public class UserList{
     }
 
     public Neighbours getUsersInZone(Id id){
-        DataPosition user= getUser(id);
+        DataUser user= getUser(id);
         Position position = user.getPosition();
         Neighbours neighbours = new Neighbours();
-        for (DataPosition userI: usersList){
+        for (DataUser userI: usersList){
             Id idUserI= userI.getId();
             if(id.equals(idUserI)) continue;
             if(position.inZone(userI.getPosition())) neighbours.addId(idUserI);
