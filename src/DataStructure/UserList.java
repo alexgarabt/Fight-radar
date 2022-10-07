@@ -1,7 +1,7 @@
 package DataStructure;
 import java.util.ArrayList;
 /**
- *Class UserList is a List of all information about the users.
+ *Class UserList is a List of all the users.
  * @see DataUser
  * @version /26/09/2022/
  */

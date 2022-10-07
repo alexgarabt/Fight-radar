@@ -9,10 +9,12 @@ public class Position {
 
     private double x;
     private double y;
+    private int minDistance;
 
     public Position(double x, double y){
         this.x=x;
         this.y=y;
+        this.minDistance=2;
     }
 
     public double getPositionX(){
@@ -24,7 +26,7 @@ public class Position {
     }
 
     public boolean inZone(Position pos){
-        if(this.distance(pos)<2) return true;
+        if(this.distance(pos)<minDistance) return true;
         return false;
     }
 

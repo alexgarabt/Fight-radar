@@ -56,6 +56,7 @@ public class Neighbours {
         return result;
     }
 
-
-
+    public ArrayList<Id> getNeighbours() {
+        return neighbours;
+    }
 }

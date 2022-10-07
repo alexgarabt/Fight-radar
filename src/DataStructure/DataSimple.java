@@ -18,6 +18,9 @@ public class DataSimple {
     public Id getId(){
         return id;
     }
+    public void setPosition(Position pos){
+        this.position=pos;
+    }
     public Position getPosition(){
         return position;
      }
