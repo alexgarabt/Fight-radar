@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 /**
  * Neighbours class is used to represent a list of users.
+ * isNeighbour(Id) Returns if the given id is in the actual Neighbour list.
  * @see Id
  * @version /26/09/2022/
  */

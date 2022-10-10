@@ -6,6 +6,7 @@ import java.io.*;
 
 /**
  * This class read the information of a file
+ * Function getFileInfo() returns the information in a String Array.
  * @version /06/10/2022/
  */
 public class ReadFile {

@@ -1,4 +1,5 @@
-import DataStructure.*;
+import DataStructure.SimpleUserList;
+import DataStructure.UserList;
 import FileProcess.*;
 import java.util.Scanner;
 
@@ -25,23 +26,36 @@ public class Main {
         }
 
         System.out.print("Fichero de movimientos: ");
-        String movsFilePath = in.nextLine();
+        String movsFilename = in.nextLine();
         System.out.println("Procesando...");
 
-        if(mode==true){
-            debugging(inicFileName,movsFilePath);
-        }
 
-    }
-    private static void debugging(String inicFileName, String movsFilename){
         ReadFile readFileInic = new ReadFile(inicFileName);
         ReadFile readFileMovs = new ReadFile(movsFilename);
-        //problemas con la clase readFileInic devuelve listas vacios
 
         UserListCreator userListCreator = new UserListCreator(readFileInic.getFileInfo());
         SimpleListCreator simpleListCreator = new SimpleListCreator(readFileMovs.getFileInfo());
-        ListComparator listComparator = new ListComparator(userListCreator.getUsersList(), simpleListCreator.getUsersList());
-        listComparator.compareLists();
 
+        UserList userList = userListCreator.getUsersList();
+        SimpleUserList movsList = simpleListCreator.getUsersList();
+
+        if(mode==true){
+            debugging(userList,movsList);
+        }
+        if(mode==false){
+            medition(userList,movsList);
+        }
+
+    }
+    private static void debugging(UserList userList, SimpleUserList movsList){
+        ListComparator listComparator = new ListComparator(userList,movsList);
+        listComparator.compareListsDebugging();
+    }
+
+    private static void medition(UserList userList, SimpleUserList movsList){
+        //Prototype
+        ListComparator listComparator = new ListComparator(userList,movsList);
+        long time = listComparator.compareListsMedition();
+        System.out.println(time);
     }
 }

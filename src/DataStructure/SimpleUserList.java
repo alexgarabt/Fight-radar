@@ -3,6 +3,13 @@ import java.util.ArrayList;
 
 /**
  *Class SimpleUserList is a List of Simple information of users.
+ * indexUser(Id) Returns the position of the id in the list. If not exist in the list, return -1.
+ * addUser(DataSimple) Add the user information at the tail of the list.
+ * deleteUser(Id) If id exist in the list, it will be deleted.
+ * getUser(Id) Returns the DataSimple associated with the id, if exist.
+ * getUsersInZone(Id) Returns a list of Neighbours with the users in
+ * the list that are near that the min distance.
+ *
  * @see DataSimple
  * @version /26/09/2022/
  */

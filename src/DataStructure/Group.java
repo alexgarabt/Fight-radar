@@ -1,6 +1,7 @@
 package DataStructure;
 /**
  * Group class identify to what group the user belongs to.
+ * equals() Compare a id between another.
  * @version /26/09/2022/
  */
 public class Group {

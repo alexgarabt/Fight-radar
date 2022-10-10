@@ -1,6 +1,10 @@
 package DataStructure;
 /**
  *Id class has the purpose of identifying each user in the data structure.
+ *The user is identified by the id.
+ *
+ * getId() Returns the String associated.
+ * equals() Compare a id between another.
  * @version /26/09/2022/
  */
 

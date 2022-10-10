@@ -2,6 +2,10 @@ package DataStructure;
 
 /**
  * Position class identify the position of a user in a two-dimensional plane.
+ * Position (x,y).
+ * minDistance represents the minimum distance of user.
+ * distance(Position) Returns the distance between two position.(The actual one and the given one).
+ * inZone(Position) Returns if the distance of the given and the actual position are less than 2.
  * @version /26/09/2022/
  */
 

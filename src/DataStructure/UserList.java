@@ -2,6 +2,13 @@ package DataStructure;
 import java.util.ArrayList;
 /**
  *Class UserList is a List of all the users.
+ * indexUser(Id) Returns the position of the id in the list. If not exist in the list, return -1.
+ * addUser(DataUser) Add the user information at the tail of the list.
+ * deleteUser(Id) If id exist in the list, it will be deleted.
+ * getUser(Id) Returns the DataUser associated with the id, if exist.
+ * getUsersInZone(Id) Returns a list of Neighbours with the users in
+ * the list that are near that the min distance.
+ *
  * @see DataUser
  * @version /26/09/2022/
  */
