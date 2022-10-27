@@ -1,4 +1,4 @@
-package DataStructure;
+package DataStructure.Data;
 /**
  *Id class has the purpose of identifying each user in the data structure.
  *The user is identified by the id.

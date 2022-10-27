@@ -1,9 +1,12 @@
-package DataStructure;
+package DataStructure.UserData;
+
+import DataStructure.Data.*;
+
 /**
  * Class representation of the information of one user.
  * @see DataSimple
- * @see Neighbours
- * @see Group
+ * @see DataStructure.Data.Neighbours
+ * @see DataStructure.Data.Group
  * @version /26/09/2022/
  */
 public class DataUser extends DataSimple{

@@ -1,4 +1,4 @@
-package DataStructure;
+package DataStructure.Data;
 
 /**
  * Position class identify the position of a user in a two-dimensional plane.

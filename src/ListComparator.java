@@ -1,13 +1,15 @@
-import DataStructure.*;
+import DataStructure.Data.*;
+import DataStructure.ListsUser.*;
+import DataStructure.UserData.*;
 
 import java.util.ArrayList;
 
 /**
  * Compare the  initial list and the moves list.
  * Returns
- * @see UserList
- * @see SimpleUserList
- * @see Neighbours
+ * @see DataStructure.Data.Neighbours
+ * @see DataStructure.ListsUser.UserList
+ * @see DataStructure.ListsUser.SimpleUserList
  * @version /06/10/2022/
  */
 public class ListComparator {

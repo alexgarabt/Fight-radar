@@ -1,9 +1,13 @@
-import DataStructure.SimpleUserList;
-import DataStructure.UserList;
+
+import DataStructure.ListsUser.SimpleUserList;
+import DataStructure.ListsUser.UserList;
 import FileProcess.*;
 import java.util.Scanner;
 
 public class Main {
+    private DataStructure.ListsUser.SimpleUserList SimpleUserList;
+    private DataStructure.ListsUser.UserList UserList;
+
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);

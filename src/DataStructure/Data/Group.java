@@ -1,4 +1,4 @@
-package DataStructure;
+package DataStructure.Data;
 /**
  * Group class identify to what group the user belongs to.
  * equals() Compare a id between another.

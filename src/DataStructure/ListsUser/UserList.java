@@ -1,5 +1,9 @@
-package DataStructure;
+package DataStructure.ListsUser;
+
+import DataStructure.Data.*;
+import DataStructure.UserData.*;
 import java.util.ArrayList;
+
 /**
  *Class UserList is a List of all the users.
  * indexUser(Id) Returns the position of the id in the list. If not exist in the list, return -1.

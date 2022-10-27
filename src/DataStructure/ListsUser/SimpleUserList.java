@@ -1,4 +1,7 @@
-package DataStructure;
+package DataStructure.ListsUser;
+
+import DataStructure.UserData.*;
+import DataStructure.Data.*;
 import java.util.ArrayList;
 
 /**

@@ -1,9 +1,11 @@
-package DataStructure;
+package DataStructure.UserData;
+
+import DataStructure.Data.*;
 
 /**
  * Class representation of simple information of one user.
- * @see Id
- * @see Position
+ * @see DataStructure.Data.Id
+ * @see DataStructure.Data.Position
  * @version 1
  */
 public class DataSimple {
