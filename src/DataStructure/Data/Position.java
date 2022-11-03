@@ -1,5 +1,5 @@
 package DataStructure.Data;
-
+import java.lang.Math;
 /**
  * Position class identify the position of a user in a two-dimensional plane.
  * Position (x,y).
@@ -33,6 +33,20 @@ public class Position {
         if(this.distance(pos)<minDistance) return true;
         return false;
     }
+
+    private double randomize(double max, double min){
+
+        double random= 1000*((Math.random() * (max - min)) + min);
+        random=(Math.floor(random))/1000;
+        return random;
+    }
+
+    public Position getRandomize(double max, double min){
+        Position newPos = new
+                Position((this.getPositionX())+randomize(max, min),(this.getPositionY())+randomize(max, min));
+        return newPos;
+    }
+
 
     public double distance(Position pos){
         /**

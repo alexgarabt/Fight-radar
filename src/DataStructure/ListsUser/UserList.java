@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * getUsersInZone(Id) Returns a list of Neighbours with the users in
  * the list that are near that the min distance.
  *
- * @see DataUser
+ * @see DataStructure.UserData.DataUser
  * @version /26/09/2022/
  */
 public class UserList{
@@ -78,6 +78,14 @@ public class UserList{
         for(DataUser user: usersList){
             user.setNeighbours(this.getUsersInZone(user.getId()));
         }
+    }
+    public SimpleUserList getSimpleUserList(){
+        SimpleUserList simpleList = new SimpleUserList();
+        for(DataUser i: usersList){
+            DataSimple simpleUser = new DataSimple(i.getId(),i.getPosition());
+            simpleList.addUser(simpleUser);
+        }
+        return simpleList;
     }
 
 

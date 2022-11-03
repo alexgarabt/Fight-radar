@@ -1,12 +1,14 @@
 
 import DataStructure.ListsUser.SimpleUserList;
 import DataStructure.ListsUser.UserList;
+import DataStructure.UserData.*;
 import FileProcess.*;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Main {
-    private DataStructure.ListsUser.SimpleUserList SimpleUserList;
-    private DataStructure.ListsUser.UserList UserList;
 
     public static void main(String[] args) {
 
@@ -18,48 +20,92 @@ public class Main {
         String[] infoFileName=pathDivide[pathDivide.length-1].split("_");
         System.out.println("Parámetros: n = "+infoFileName[1]+", "+"d = "+infoFileName[2]);
 
+        ReadFile readFileInic = new ReadFile(inicFileName);
+        UserListCreator userListCreator = new UserListCreator(readFileInic.getFileInfo());
+        UserList userList = userListCreator.getUsersList();
 
-        System.out.print("Modo[D]epuración o [M]edición? ");
+        String option = modeElection();
 
-        String modeElection = in.nextLine();
-        Boolean mode=true;// mode == true carry the application to "Depuracion" mode.
-                          // mode == false carry the application to "Medicion mode.
-        if(modeElection.equalsIgnoreCase("D"))mode = true;
-        else if (modeElection.equalsIgnoreCase("M")) {
-            mode = false;
+        if(option.equalsIgnoreCase("M")){
+
+            System.out.print("Numero de ciclos: ");
+            int numCycles = in.nextInt();
+            medition(userList,numCycles);
         }
 
-        System.out.print("Fichero de movimientos: ");
-        String movsFilename = in.nextLine();
-        System.out.println("Procesando...");
+        else if (option.equalsIgnoreCase("D")) {
+            System.out.print("Fichero de movimientos: ");
+            String movsFilename = in.nextLine();
+            System.out.println("Procesando...");
 
+            ReadFile readFileMovs = new ReadFile(movsFilename);
+            SimpleListCreator simpleListCreator = new SimpleListCreator(readFileMovs.getFileInfo());
+            SimpleUserList movsList = simpleListCreator.getUsersList();
 
-        ReadFile readFileInic = new ReadFile(inicFileName);
-        ReadFile readFileMovs = new ReadFile(movsFilename);
-
-        UserListCreator userListCreator = new UserListCreator(readFileInic.getFileInfo());
-        SimpleListCreator simpleListCreator = new SimpleListCreator(readFileMovs.getFileInfo());
-
-        UserList userList = userListCreator.getUsersList();
-        SimpleUserList movsList = simpleListCreator.getUsersList();
-
-        if(mode==true){
             debugging(userList,movsList);
         }
-        if(mode==false){
-            medition(userList,movsList);
-        }
-
+        in.close();
     }
+
+    /**
+     * Run the program in mode debuggin with the given parameters.
+     * @param userList, Initial list with the users information.
+     * @param movsList, List of the movements.
+     */
     private static void debugging(UserList userList, SimpleUserList movsList){
+        System.out.println("Procesando...");
         ListComparator listComparator = new ListComparator(userList,movsList);
         listComparator.compareListsDebugging();
     }
 
-    private static void medition(UserList userList, SimpleUserList movsList){
-        //Prototype
-        ListComparator listComparator = new ListComparator(userList,movsList);
-        long time = listComparator.compareListsMedition();
-        System.out.println(time);
+    /**
+     * Run the program in medition for numOfCycles cycles.
+     * @param userList, list with the users information.
+     * @param numOfCycles
+     */
+    private static void medition(UserList userList, int numOfCycles){
+        double maxRand =0.5;
+        double minRand=-0.5;
+        long[] cycleTimes = new long[numOfCycles];
+
+        SimpleUserList simpleList = userList.getSimpleUserList();
+
+        System.out.println("Procesando...");
+        for(int i=0;i<numOfCycles;i++){
+            //Create the moves random
+            ArrayList<DataSimple> infoList = simpleList.getUsersList();
+            for(DataSimple userSimple: infoList){
+                userSimple.setPosition(userSimple.getPosition().getRandomize(maxRand,minRand));
+            }
+            SimpleUserList movsList =new SimpleUserList();
+            movsList.setUsersList(infoList);
+
+            ListComparator listComparator = new ListComparator(userList,movsList);
+            long time = listComparator.compareListsMedition();
+
+            cycleTimes[i]=time;
+            System.out.println(time);
+        }
+        long total=0;
+        for(long i: cycleTimes)total=total+i;
+        long averageTime = total/numOfCycles;
+        System.out.println("Promedio= "+averageTime);
+
+    }
+
+    /**
+     * Let choose on of the possible modes of the program.
+     * @return A valid mode election
+     */
+    private static String modeElection(){
+        Scanner cad = new Scanner(System.in);
+        String modeElection;
+
+        while(true){
+            System.out.print("Modo[D]epuración o [M]edición? ");
+            modeElection = cad.nextLine();
+            if(modeElection.equalsIgnoreCase("M") || modeElection.equalsIgnoreCase("D"))break;
+        }
+        return modeElection;
     }
 }
