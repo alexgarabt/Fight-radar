@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * addUser(DataSimple) Add the user information at the tail of the list.
  * deleteUser(Id) If id exist in the list, it will be deleted.
  * getUser(Id) Returns the DataSimple associated with the id, if exist.
- * getUsersInZone(Id) Returns a list of Neighbours with the users in
- * the list that are near that the min distance.
+ * getUsersInZone(Id) Returns a list of Neighbours with the users in-
+ * the list that are closer than the min distance.
  *
- * @see DataSimple
+ * @see DataStructure.UserData.DataSimple
  * @version /26/09/2022/
  */
 public class SimpleUserList {
@@ -32,6 +32,10 @@ public class SimpleUserList {
         return usersList;
     }
 
+    /**
+     * Add the DataSimple to the userList.
+     * @param user
+     */
     public void addUser(DataSimple user){
         usersList.add(user);
     }
@@ -40,6 +44,12 @@ public class SimpleUserList {
         return usersList.size();
     }
 
+    /**
+     * Secuencial search for the user with these Id in the userList, and return the position.
+     * @param id, of the user to search.
+     * @return (int) the position of the user in the userList.
+     * @return (-1) if there is no user with the given Id.
+     */
     public int indexUser(Id id){
 
         for (int i=0; i<size(); i++){
@@ -48,19 +58,37 @@ public class SimpleUserList {
         return -1;
     }
 
-
+    /**
+     * Search a user in the list with same id, and return the information.
+     * This function use indexUser(Id) to get the position in the list.
+     * @param id, of the user to search.
+     * @return DataSimple of the user.
+     * @return null if there is no user with that id.
+     */
     public DataSimple getUser(Id id){
         int pos=indexUser(id);
         if (pos==-1){ return null;}
         return usersList.get(pos);
     }
 
+    /**
+     * Deletes int the list, the DataSimple of the user with the given id.
+     * If there is no user with that id, then nothing.
+     * Use indexUser(Id), to get the position in the list.
+     * @param id
+     */
     public void deleteUser(Id id){
         int pos=indexUser(id);
         if (pos==-1) return;
         usersList.remove(pos);
     }
 
+    /**
+     * Returns a Neighbours object with the users in the list that are in closer
+     * than de minDistance to the user with the given id.
+     * @param id
+     * @return Neighbours list.
+     */
     public Neighbours getUsersInZone(Id id){
         DataSimple user= getUser(id);
         Position position = user.getPosition();

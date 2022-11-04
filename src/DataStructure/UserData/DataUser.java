@@ -3,7 +3,7 @@ package DataStructure.UserData;
 import DataStructure.Data.*;
 
 /**
- * Class representation of the information of one user.
+ * Class representation of the complex information of one user.
  * @see DataSimple
  * @see DataStructure.Data.Neighbours
  * @see DataStructure.Data.Group

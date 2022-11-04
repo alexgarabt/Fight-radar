@@ -6,7 +6,7 @@ import DataStructure.Data.*;
  * Class representation of simple information of one user.
  * @see DataStructure.Data.Id
  * @see DataStructure.Data.Position
- * @version 1
+ * @version /26/09/2022/
  */
 public class DataSimple {
     private Id id;

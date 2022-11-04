@@ -30,6 +30,7 @@ public class Main {
 
             System.out.print("Numero de ciclos: ");
             int numCycles = in.nextInt();
+            System.out.println("Procesando...");
             medition(userList,numCycles);
         }
 
@@ -53,7 +54,6 @@ public class Main {
      * @param movsList, List of the movements.
      */
     private static void debugging(UserList userList, SimpleUserList movsList){
-        System.out.println("Procesando...");
         ListComparator listComparator = new ListComparator(userList,movsList);
         listComparator.compareListsDebugging();
     }
@@ -69,8 +69,6 @@ public class Main {
         long[] cycleTimes = new long[numOfCycles];
 
         SimpleUserList simpleList = userList.getSimpleUserList();
-
-        System.out.println("Procesando...");
         for(int i=0;i<numOfCycles;i++){
             //Create the moves random
             ArrayList<DataSimple> infoList = simpleList.getUsersList();

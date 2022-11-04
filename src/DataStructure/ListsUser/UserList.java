@@ -33,6 +33,10 @@ public class UserList{
         return usersList;
     }
 
+    /**
+     * Add the DataSimple to the userList.
+     * @param user
+     */
     public void addUser(DataUser user){
         usersList.add(user);
     }
@@ -41,6 +45,12 @@ public class UserList{
         return usersList.size();
     }
 
+    /**
+     * Secuencial search for the user with these Id in the userList, and return the position.
+     * @param id, of the user to search.
+     * @return (int) the position of the user in the userList.
+     * @return (-1) if there is no user with the given Id.
+     */
     public int indexUser(Id id){
 
         for (int i=0; i<size(); i++){
@@ -49,19 +59,36 @@ public class UserList{
         return -1;
     }
 
-
+    /**
+     * Search a user in the list with same id, and return the information.
+     * This function use indexUser(Id) to get the position in the list.
+     * @param id, of the user to search.
+     * @return DataSimple of the user.
+     * @return null if there is no user with that id.
+     */
     public DataUser getUser(Id id){
         int pos=indexUser(id);
         if (pos==-1){ return null;}
         return usersList.get(pos);
     }
-
+    /**
+     * Deletes int the list, the DataSimple of the user with the given id.
+     * If there is no user with that id, then nothing.
+     * Use indexUser(Id), to get the position in the list.
+     * @param id
+     */
     public void deleteUser(Id id){
         int pos=indexUser(id);
         if (pos==-1) return;
         usersList.remove(pos);
     }
 
+    /**
+     * Returns a Neighbours object with the users in the list that are in closer
+     * than de minDistance to the user with the given id.
+     * @param id
+     * @return Neighbours list.
+     */
     public Neighbours getUsersInZone(Id id){
         DataUser user= getUser(id);
         Position position = user.getPosition();
@@ -74,11 +101,20 @@ public class UserList{
         return neighbours;
     }
 
+    /**
+     * Set the new neighbours of the users in the list.
+     * Used after a move of one user.
+     */
     public void setUsersNeighbours(){
         for(DataUser user: usersList){
             user.setNeighbours(this.getUsersInZone(user.getId()));
         }
     }
+
+    /**
+     * Returns a list with the simple information of the users.
+      * @return SimpleUserList.
+     */
     public SimpleUserList getSimpleUserList(){
         SimpleUserList simpleList = new SimpleUserList();
         for(DataUser i: usersList){
