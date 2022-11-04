@@ -1,21 +1,45 @@
-
 import DataStructure.ListsUser.SimpleUserList;
 import DataStructure.ListsUser.UserList;
 import DataStructure.UserData.*;
 import FileProcess.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.lang.Math;
 
-
+/**
+ * Main is the launcher class and contais the methods to interact with the user and simulate the program.
+ * @see FileProcess.ReadFile
+ * @see FileProcess.SimpleListCreator
+ * @see FileProcess.UserListCreator
+ * @see DataStructure.UserData.DataSimple
+ * @see DataStructure.UserData.DataUser
+ * @see DataStructure.ListsUser.SimpleUserList
+ * @see DataStructure.ListsUser.UserList
+ * @see DataStructure.Data.Id
+ * @see DataStructure.Data.Position
+ * @see DataStructure.Data.Group
+ * @see DataStructure.Data.Neighbours
+ */
 public class Main {
 
+
+    /**
+     * Laucher method.
+     * @param args
+     */
     public static void main(String[] args) {
 
+        //Get Initial file.
         Scanner in = new Scanner(System.in);
         System.out.print("Fichero de estado: ");
         String inicFileName = in.nextLine();
         String[] pathDivide = inicFileName.split("/");
+
+        //modules
+        //is a relative path
+        if (pathDivide.length==1){
+            inicFileName = "../"+inicFileName;
+        }
 
         String[] infoFileName=pathDivide[pathDivide.length-1].split("_");
         System.out.println("Parámetros: n = "+infoFileName[1]+", "+"d = "+infoFileName[2]);
@@ -37,12 +61,12 @@ public class Main {
         else if (option.equalsIgnoreCase("D")) {
             System.out.print("Fichero de movimientos: ");
             String movsFilename = in.nextLine();
-            System.out.println("Procesando...");
 
             ReadFile readFileMovs = new ReadFile(movsFilename);
             SimpleListCreator simpleListCreator = new SimpleListCreator(readFileMovs.getFileInfo());
             SimpleUserList movsList = simpleListCreator.getUsersList();
 
+            System.out.println("Procesando...");
             debugging(userList,movsList);
         }
         in.close();
@@ -66,12 +90,15 @@ public class Main {
     private static void medition(UserList userList, int numOfCycles){
         double maxRand =0.5;
         double minRand=-0.5;
-        long[] cycleTimes = new long[numOfCycles];
+        double[] cycleTimes = new double[numOfCycles];
+        long timeNanoSeconds;
+        double timeSeconds;
 
         SimpleUserList simpleList = userList.getSimpleUserList();
+        ArrayList<DataSimple> infoList;
         for(int i=0;i<numOfCycles;i++){
             //Create the moves random
-            ArrayList<DataSimple> infoList = simpleList.getUsersList();
+            infoList = simpleList.getUsersList();
             for(DataSimple userSimple: infoList){
                 userSimple.setPosition(userSimple.getPosition().getRandomize(maxRand,minRand));
             }
@@ -79,15 +106,18 @@ public class Main {
             movsList.setUsersList(infoList);
 
             ListComparator listComparator = new ListComparator(userList,movsList);
-            long time = listComparator.compareListsMedition();
 
-            cycleTimes[i]=time;
-            System.out.println(time);
+            timeNanoSeconds = listComparator.compareListsMedition();
+            timeNanoSeconds = timeNanoSeconds/100000;
+            timeSeconds = ((double) (timeNanoSeconds))/10000;
+
+            cycleTimes[i]=timeSeconds;
+            System.out.println(timeSeconds+"s");
         }
-        long total=0;
-        for(long i: cycleTimes)total=total+i;
-        long averageTime = total/numOfCycles;
-        System.out.println("Promedio= "+averageTime);
+        double total=0;
+        for(double i: cycleTimes)total=total+i;
+        double averageTime = total/numOfCycles;
+        System.out.println("Promedio = "+averageTime+"s");
 
     }
 

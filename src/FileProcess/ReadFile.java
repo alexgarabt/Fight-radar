@@ -1,7 +1,6 @@
 package FileProcess;
 import java.util.Scanner;
 import java.util.ArrayList;
-
 import java.io.*;
 
 /**
@@ -16,6 +15,10 @@ public class ReadFile {
         this.fileName = fileName;
     }
 
+    /**
+     * Reads the information of a file and returns an ArrayList.
+     * @return A list and in each position is one line of the file.
+     */
     public ArrayList getFileInfo() {
         File file = new File(fileName);
         Scanner open;

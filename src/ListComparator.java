@@ -2,17 +2,16 @@ import DataStructure.Data.*;
 import DataStructure.ListsUser.*;
 import DataStructure.UserData.*;
 
-import java.util.ArrayList;
 
 /**
  * Compare the  initial list and the moves list.
- * Returns
  * @see DataStructure.Data.Neighbours
  * @see DataStructure.ListsUser.UserList
  * @see DataStructure.ListsUser.SimpleUserList
  * @version /06/10/2022/
  */
 public class ListComparator {
+
     private UserList oldList;
     private SimpleUserList movsUserList;
 
@@ -21,16 +20,23 @@ public class ListComparator {
         this.movsUserList=movsUserList;
     }
 
+    /**
+     * Compare the oldList between the movsUserList and update the Neighbours in the oldList.
+     * And print the different moves of the users.
+     */
     public void compareListsDebugging(){
-        /**
-         *
-         */
         for(DataSimple userSimple : movsUserList.getUsersList() ){
             Neighbours[] listType= getTypeNeighbours(userSimple);
             printMoves(userSimple.getId(),
                     listType[0],listType[1],listType[2]);
         }
     }
+
+    /**
+     * Compare the oldList between the movsUserList and update the Neighbours in the oldList,
+     * and get the time that requires that.
+     * @return The time in nanoseconds.
+     */
     public long compareListsMedition(){
         long startTime = System.nanoTime();
         for(DataSimple userSimple : movsUserList.getUsersList() ){
@@ -39,6 +45,12 @@ public class ListComparator {
         return System.nanoTime() - startTime;
     }
 
+    /**
+     * With the given Simple user information of the new position of the user,
+     * searchs in oldList the new Neighbours of the moved user and update the oldList neighbours of each one.
+     * @param userSimple
+     * @return
+     */
     public Neighbours[] getTypeNeighbours(DataSimple userSimple){
         Id userId =userSimple.getId();
         DataUser user = oldList.getUser(userId);
@@ -82,6 +94,14 @@ public class ListComparator {
         return listType;
 
     }
+
+    /**
+     * Function in charge to print the neighbours updates of the user
+     * @param user that has moved.
+     * @param exitNeighbours that now are not in the minDistance zone.
+     * @param enterFriendNeighbours new Neighbours that have the same group that the moved user.
+     * @param enterEnemyNeighbours new Neighbours that haven't the same group that the moved user.
+     */
     public void printMoves(Id user,Neighbours exitNeighbours, Neighbours enterFriendNeighbours,
                                   Neighbours enterEnemyNeighbours){
         for(Id enterEnemyUser: enterEnemyNeighbours.getNeighbours()){

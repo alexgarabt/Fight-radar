@@ -1,9 +1,7 @@
 package FileProcess;
-
 import DataStructure.Data.*;
 import DataStructure.UserData.*;
 import DataStructure.ListsUser.*;
-
 import java.util.ArrayList;
 
 
@@ -22,6 +20,12 @@ public class SimpleListCreator {
     public SimpleListCreator(ArrayList info){
         this.info=info;
     }
+
+    /**
+     * Creates a DataSimple with the given information.
+     * @param userInfo String with the simple information of one user. [id x y]
+     * @return A DataSimple of the user.
+     */
     private DataSimple createDataSimple(String userInfo){
         Id id;
         Position pos;
@@ -31,6 +35,11 @@ public class SimpleListCreator {
         pos = new Position((Double.parseDouble(userInfoParts[1])),Double.parseDouble(userInfoParts[2]));
         return (new DataSimple(id,pos));
     }
+
+    /**
+     * Creates a SimpleUserList with the information of the users stored in ArrayList info.
+     * @return SimpleUserList with the users information
+     */
     public SimpleUserList getUsersList(){
         SimpleUserList simpleList = new SimpleUserList();
         for(String userInfo: info){
