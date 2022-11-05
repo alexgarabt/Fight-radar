@@ -2,6 +2,8 @@ import DataStructure.Data.*;
 import DataStructure.ListsUser.*;
 import DataStructure.UserData.*;
 
+import java.util.ArrayList;
+
 
 /**
  * Compare the  initial list and the moves list.
@@ -53,20 +55,29 @@ public class ListComparator {
      */
     public Neighbours[] getTypeNeighbours(DataSimple userSimple){
         Id userId =userSimple.getId();
-        DataUser user = oldList.getUser(userId);
+
+        ArrayList<DataUser>listInfoUser=oldList.getUsersList();
+        int numPosUser = oldList.indexUser(userId);
+
+        DataUser user = listInfoUser.get(numPosUser);
         Group userGroup= user.getGroup();
 
         Neighbours oldNeighbours = user.getNeighbours();
 
         user.setPosition(userSimple.getPosition());
-        oldList.deleteUser(userId);
-        oldList.addUser(user);
+        listInfoUser.set(numPosUser, user);
+        oldList.setUsersList(listInfoUser);
+        //oldList.deleteUser(userId);
+        //oldList.addUser(user);
 
         Neighbours newNeighbours = oldList.getUsersInZone(userId);
 
         user.setNeighbours(newNeighbours);
-        oldList.deleteUser(userId);
-        oldList.addUser(user);
+        listInfoUser.set(numPosUser, user);
+        oldList.setUsersList(listInfoUser);
+
+        //oldList.deleteUser(userId);
+        //oldList.addUser(user);
 
         oldList.setUsersNeighbours();
 

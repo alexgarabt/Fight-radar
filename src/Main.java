@@ -96,7 +96,13 @@ public class Main {
 
         SimpleUserList simpleList = userList.getSimpleUserList();
         ArrayList<DataSimple> infoList;
+
+        UserList userListCanChange = new UserList();
         for(int i=0;i<numOfCycles;i++){
+
+            //New object because ListComparator.getTypeNeighbours edits the oldList
+            userListCanChange.setUsersList((ArrayList<DataUser>) userList.getUsersList().clone());
+
             //Create the moves random
             infoList = simpleList.getUsersList();
             for(DataSimple userSimple: infoList){
@@ -105,7 +111,7 @@ public class Main {
             SimpleUserList movsList =new SimpleUserList();
             movsList.setUsersList(infoList);
 
-            ListComparator listComparator = new ListComparator(userList,movsList);
+            ListComparator listComparator = new ListComparator(userListCanChange,movsList);
 
             timeNanoSeconds = listComparator.compareListsMedition();
             timeNanoSeconds = timeNanoSeconds/100000;

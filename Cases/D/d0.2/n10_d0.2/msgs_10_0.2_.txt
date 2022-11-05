@@ -1,0 +1,14 @@
+LOLI+=KILLER
+KILLER+=LOLI
+LOLI-BRONCO
+BRONCO-LOLI
+---
+---
+---
+---
+---
+---
+---
+---
+---
+---
