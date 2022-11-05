@@ -4,7 +4,6 @@ import DataStructure.UserData.*;
 import FileProcess.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.lang.Math;
 
 /**
  * Main is the launcher class and contais the methods to interact with the user and simulate the program.
@@ -97,11 +96,11 @@ public class Main {
         SimpleUserList simpleList = userList.getSimpleUserList();
         ArrayList<DataSimple> infoList;
 
-        UserList userListCanChange = new UserList();
+        UserList userListTemp = new UserList();
         for(int i=0;i<numOfCycles;i++){
 
             //New object because ListComparator.getTypeNeighbours edits the oldList
-            userListCanChange.setUsersList((ArrayList<DataUser>) userList.getUsersList().clone());
+            userListTemp.setUsersList((ArrayList<DataUser>) userList.getUsersList().clone());
 
             //Create the moves random
             infoList = simpleList.getUsersList();
@@ -111,7 +110,7 @@ public class Main {
             SimpleUserList movsList =new SimpleUserList();
             movsList.setUsersList(infoList);
 
-            ListComparator listComparator = new ListComparator(userListCanChange,movsList);
+            ListComparator listComparator = new ListComparator(userListTemp,movsList);
 
             timeNanoSeconds = listComparator.compareListsMedition();
             timeNanoSeconds = timeNanoSeconds/100000;

@@ -124,6 +124,31 @@ public class UserList{
         return simpleList;
     }
 
+    /**
+     * In the userList, update the Neighbours list of the user is
+     * enterNeighbours and exitNeighbours, adding or removing userId from this list.
+     * @param userId user to add o remove from the lists of Neighbours.
+     * @param enterNeighbours Neighbours that has to update his list and add userId to their neighbour List.
+     * @param exitNeighbours Neighbours that has to update his list and add userId to their neighbour List.
+     */
+    public void updateUserInNeighboursLists(Id userId, Neighbours enterNeighbours,
+                                            Neighbours exitNeighbours){
+        //Firs add userId to the Neighbours list of enterNeighbours users.
+        Neighbours listTemp;
+        for(DataUser possibleNeighbour: usersList){
+            if(enterNeighbours.isNeighbour(possibleNeighbour.getId())){
+                listTemp = possibleNeighbour.getNeighbours();
+                listTemp.addId(userId);
+                possibleNeighbour.setNeighbours(listTemp);
+            }
+            else if(exitNeighbours.isNeighbour(possibleNeighbour.getId())){
+                listTemp = possibleNeighbour.getNeighbours();
+                for(int j=0;j<listTemp.size();j++){
+                    if(listTemp.getId(j).equals(userId))listTemp.removeId(j);
+                }
+            }
+        }
+    }
 
 
 }

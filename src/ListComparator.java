@@ -1,7 +1,6 @@
 import DataStructure.Data.*;
 import DataStructure.ListsUser.*;
 import DataStructure.UserData.*;
-
 import java.util.ArrayList;
 
 
@@ -51,7 +50,9 @@ public class ListComparator {
      * With the given Simple user information of the new position of the user,
      * searchs in oldList the new Neighbours of the moved user and update the oldList neighbours of each one.
      * @param userSimple
-     * @return
+     * @return listType[0]=exitNeighbours
+     * @return listType[2]=enterEnemyNeighbours
+     * @return listType[1]=enterFriendNeighbours;
      */
     public Neighbours[] getTypeNeighbours(DataSimple userSimple){
         Id userId =userSimple.getId();
@@ -64,25 +65,23 @@ public class ListComparator {
 
         Neighbours oldNeighbours = user.getNeighbours();
 
+        //Add the new Position of the use to the oldList.
         user.setPosition(userSimple.getPosition());
         listInfoUser.set(numPosUser, user);
         oldList.setUsersList(listInfoUser);
-        //oldList.deleteUser(userId);
-        //oldList.addUser(user);
+
 
         Neighbours newNeighbours = oldList.getUsersInZone(userId);
 
         user.setNeighbours(newNeighbours);
+        //Add the new Neighbours in the oldList.
         listInfoUser.set(numPosUser, user);
         oldList.setUsersList(listInfoUser);
 
-        //oldList.deleteUser(userId);
-        //oldList.addUser(user);
-
-        oldList.setUsersNeighbours();
 
 
         Neighbours exitNeighbours = new Neighbours();
+        Neighbours enterNeighbours = new Neighbours();
         Neighbours enterFriendNeighbours = new Neighbours();
         Neighbours enterEnemyNeighbours = new Neighbours();
 
@@ -93,11 +92,15 @@ public class ListComparator {
         //Obtains the enterFriendsNeighbours and enterEnemyNeighbours
         for (Id newOne : newNeighbours.getNeighbours()){
             if(!oldNeighbours.isNeighbour(newOne)){
+                enterNeighbours.addId(newOne);
                 DataUser newUser = oldList.getUser(newOne);
                 if(userGroup.equals(newUser.getGroup()))enterFriendNeighbours.addId(newOne);
                 else enterEnemyNeighbours.addId(newOne);
             }
         }
+
+        oldList.updateUserInNeighboursLists(userId,enterNeighbours,exitNeighbours);
+
         Neighbours[] listType =new Neighbours[3];
         listType[0]=exitNeighbours;
         listType[2]=enterEnemyNeighbours;
