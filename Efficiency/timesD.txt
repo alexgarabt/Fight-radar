@@ -1,8 +1,6 @@
-/home/apolo/Projects/EDA/Fight-radar/Cases/DFiles/n5000/n5000_d5.0/inicial_5000_5.0_.txt
+Meditions for (D) cases variaton.
 
-Meditions for (N) cases variaton.
-
-g(d)=(4.633144E-17)n^4 + O(n^3)
+g(d)= 0.683990909778416d + O(1)
 
 
 ---------------------------------------------------------------
