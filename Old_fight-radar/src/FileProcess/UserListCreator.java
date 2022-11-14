@@ -1,7 +1,6 @@
 package FileProcess;
 import DataStructure.Data.*;
 import DataStructure.DataUser;
-import DataStructure.UserData.*;
 import DataStructure.ListsUser.*;
 import java.util.ArrayList;
 

@@ -3,7 +3,6 @@ package DataStructure.ListsUser;
 import DataStructure.Data.*;
 import DataStructure.DataSimple;
 import DataStructure.DataUser;
-import DataStructure.UserData.*;
 import java.util.ArrayList;
 
 /**

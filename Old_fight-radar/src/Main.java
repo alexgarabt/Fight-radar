@@ -2,7 +2,6 @@ import DataStructure.DataSimple;
 import DataStructure.DataUser;
 import DataStructure.ListsUser.SimpleUserList;
 import DataStructure.ListsUser.UserList;
-import DataStructure.UserData.*;
 import FileProcess.*;
 import java.util.ArrayList;
 import java.util.Scanner;
