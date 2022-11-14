@@ -1,8 +1,8 @@
 package DataStructure.Data;
 /**
- * Group class identify to what group the user belongs to.
- * equals() Compare a id between another.
- * @version /26/09/2022/
+ * Group class identify the user group.
+ *
+ * @version 2.0
  */
 public class Group {
 
@@ -30,8 +30,8 @@ public class Group {
         this.group=group;
     }
     public String toString(){
-        if (group) return "true";
-        return "false";
+        if (group) return "S";
+        return "N";
     }
 
 

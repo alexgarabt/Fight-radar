@@ -1,5 +1,7 @@
 package DataStructure.Data;
-import java.util.ArrayList;
+import java.util.hashSet;
+//Change to a set of Id
+
 
 /**
  * Neighbours class is used to represent a list of users id.
