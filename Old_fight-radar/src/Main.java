@@ -1,3 +1,5 @@
+import DataStructure.DataSimple;
+import DataStructure.DataUser;
 import DataStructure.ListsUser.SimpleUserList;
 import DataStructure.ListsUser.UserList;
 import DataStructure.UserData.*;
@@ -10,8 +12,8 @@ import java.util.Scanner;
  * @see FileProcess.ReadFile
  * @see FileProcess.SimpleListCreator
  * @see FileProcess.UserListCreator
- * @see DataStructure.UserData.DataSimple
- * @see DataStructure.UserData.DataUser
+ * @see DataSimple
+ * @see DataUser
  * @see DataStructure.ListsUser.SimpleUserList
  * @see DataStructure.ListsUser.UserList
  * @see DataStructure.Data.Id

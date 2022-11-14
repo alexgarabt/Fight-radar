@@ -1,5 +1,6 @@
 package FileProcess;
 import DataStructure.Data.*;
+import DataStructure.DataSimple;
 import DataStructure.UserData.*;
 import DataStructure.ListsUser.*;
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Class in charge of create, the UserList with the information in a String[]
- * @see DataStructure.UserData.DataSimple
+ * @see DataSimple
  * @see DataStructure.ListsUser.SimpleUserList
  * @see DataStructure.Data.Id
  * @see DataStructure.Data.Position

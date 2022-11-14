@@ -1,4 +1,4 @@
-package DataStructure.UserData;
+package DataStructure;
 
 import DataStructure.Data.*;
 

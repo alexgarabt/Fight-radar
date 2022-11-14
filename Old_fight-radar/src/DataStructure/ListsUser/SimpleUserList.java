@@ -1,5 +1,6 @@
 package DataStructure.ListsUser;
 
+import DataStructure.DataSimple;
 import DataStructure.UserData.*;
 import DataStructure.Data.*;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * getUsersInZone(Id) Returns a list of Neighbours with the users in-
  * the list that are closer than the min distance.
  *
- * @see DataStructure.UserData.DataSimple
+ * @see DataSimple
  * @version /26/09/2022/
  */
 public class SimpleUserList {
