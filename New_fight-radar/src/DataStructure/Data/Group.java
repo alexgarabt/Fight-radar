@@ -1,4 +1,4 @@
-package DataStructure.Data;
+package DataStructure.UserData.DataStructure.Data;
 /**
  * Group class identify the user group.
  *

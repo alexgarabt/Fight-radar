@@ -1,29 +1,30 @@
-package DataStructure.UserData;
+package DataStructure.UserData.DataStructure;
 
-import DataStructure.Data.*;
+import DataStructure.DataSimple;
+import DataStructure.UserData.DataStructure.Data.Group;
 
 /**
  * Class representation of the complex information of one user.
- * @see DataSimple
- * @see DataStructure.Data.Neighbours
- * @see DataStructure.Data.Group
+ * @see DataStructure.DataSimple
+ * @see DataStructure.UserData.DataStructure.Data.Neighbours
+ * @see DataStructure.UserData.DataStructure.Data.Group
  * @version /26/09/2022/
  */
-public class DataUser extends DataSimple{
+public class DataUser extends DataSimple {
 
-    private Neighbours neighbours;
-    private Group group;
+    private DataStructure.UserData.DataStructure.Data.Neighbours neighbours;
+    private DataStructure.UserData.DataStructure.Data.Group group;
 
-    public DataUser(Id id, Position position, Group group, Neighbours neighbours) {
+    public DataUser(DataStructure.UserData.DataStructure.Data.Id id, DataStructure.UserData.DataStructure.Data.Position position, DataStructure.UserData.DataStructure.Data.Group group, DataStructure.UserData.DataStructure.Data.Neighbours neighbours) {
         super(id, position);
         this.group=group;
         this.neighbours=neighbours;
     }
 
-    public Neighbours getNeighbours(){
+    public DataStructure.UserData.DataStructure.Data.Neighbours getNeighbours(){
         return neighbours;
     }
-    public void setNeighbours(Neighbours neighbours){
+    public void setNeighbours(DataStructure.UserData.DataStructure.Data.Neighbours neighbours){
         this.neighbours=neighbours;
     }
 

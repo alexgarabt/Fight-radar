@@ -1,13 +1,13 @@
-package DataStructure.Data;
-import java.util.hashSet;
+package DataStructure.UserData.DataStructure.Data;
+import java.util.ArrayList;
+import java.util.HashSet;
 //Change to a set of Id
 
 
 /**
  * Neighbours class is used to represent a list of users id.
- * isNeighbour(Id) Returns if the given id is in the actual Neighbour list.
  * @see Id
- * @version /26/09/2022/
+ * @version 2.0
  */
 public class Neighbours {
 

@@ -1,4 +1,4 @@
-package DataStructure.Data;
+package DataStructure.UserData.DataStructure.Data;
 import java.lang.Math;
 /**
  * Position class identify the position of a user in a two-dimensional plane.
