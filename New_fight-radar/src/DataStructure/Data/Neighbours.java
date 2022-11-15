@@ -15,10 +15,6 @@ public class Neighbours {
         this.neighbours = new HashSet();
     }
 
-    public void setNeighbours(HashSet neighbours) {
-        this.neighbours = neighbours;
-    }
-
     /**
      * Returns if the given Id is in the Neighbours list.
      * @param id
@@ -28,6 +24,7 @@ public class Neighbours {
     public Boolean isNeighbour(Id id){
         return neighbours.contains(id);
     }
+
     public void add(Id id){
         neighbours.add(id);
     }
@@ -40,8 +37,14 @@ public class Neighbours {
         neighbours.clear();
     }
 
-    public int size(){
-        return neighbours.size();
+    /**
+     * Creates a clone on this Neighbour object.
+     * @return the Neighbours clone.
+     */
+    public Neighbours clone(){
+        Neighbours clone = new Neighbours();
+        clone.setNeighbours((HashSet) neighbours.clone());
+        return clone;
     }
 
     /**
@@ -52,6 +55,21 @@ public class Neighbours {
         return neighbours.iterator();
     }
 
+    /**
+     * Tells if neighbours set is empty
+     * @return true, if is empty.
+     * false, if is not empty.
+     */
+    public boolean isEmpty(){
+        return neighbours.isEmpty();
+    }
+
+    public void setNeighbours(HashSet neighbours) {
+        this.neighbours = neighbours;
+    }
+    public HashSet getNeighbours() {
+        return neighbours;
+    }
     public String toString(){
         String result ="[";
         Id user;
@@ -61,9 +79,5 @@ public class Neighbours {
         }
         result+="]";
         return result;
-    }
-
-    public HashSet getNeighbours() {
-        return neighbours;
     }
 }

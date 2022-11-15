@@ -35,7 +35,6 @@ public class Position {
         return Math.sqrt((Math.pow((this.x-pos.getPositionX()), 2))+
                 (Math.pow((this.y-pos.getPositionY()), 2)));
     }
-
     /**
      * This function has the purpose of see if two Postions are in the min distance.
      * @param pos Position to compare.
@@ -51,9 +50,9 @@ public class Position {
      * This function gives adds a random number between (-max,max) to x and y.
      * @param max, max value of the random number.
      */
-    private void randomize(double max){
-        x += Math.random() - 0.5;
-        y += Math.random() - 0.5;
+    public void randomize(double max){
+        x += Math.random() - max;
+        y += Math.random() - max;
     }
 
     public String toString(){
