@@ -55,6 +55,10 @@ public class Position {
         y += Math.random() - max;
     }
 
+    public Position clone(){
+        return new Position(x,y);
+    }
+
     public String toString(){
         return "("+this.x+", "+this.y+")";
     }

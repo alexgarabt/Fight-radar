@@ -16,21 +16,30 @@ public class Neighbours {
     }
 
     /**
-     * Returns if the given Id is in the Neighbours list.
+     * Returns if the given Id has the same string that one in the Neighbours set.
      * @param id
      * @return true if (id) is in neighbours.
      * @return false if not.
      */
     public Boolean isNeighbour(Id id){
-        return neighbours.contains(id);
+        return neighbours.contains(id.getId());
     }
 
+    /**
+     * The set store the string of the id to HashSet could compare.
+     * @param id
+     */
     public void add(Id id){
-        neighbours.add(id);
+        //neighbours.add(id.clone()); adds a objectec that is not comparable by HashSet.contains();
+        neighbours.add(id.getId());
     }
 
+    /**
+     * Remove the string in the set that are equals to the string id.getId()
+     * @param id
+     */
     public void remove(Id id){
-        neighbours.remove(id);
+        neighbours.remove(id.getId());
     }
 
     public void clear(){
@@ -70,12 +79,14 @@ public class Neighbours {
     public HashSet getNeighbours() {
         return neighbours;
     }
+
     public String toString(){
         String result ="[";
-        Id user;
+        String user;
         Iterator iterator = getIterator();
         while(iterator.hasNext()){
-            result= iterator.next().toString()+",";
+            user = (String) iterator.next();
+            result= result + user.toString()+",";
         }
         result+="]";
         return result;

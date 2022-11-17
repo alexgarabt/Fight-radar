@@ -1,4 +1,6 @@
 package DataStructure.Data;
+import java.lang.Object;
+
 /**
  *Id class is the user identifier.
  *
@@ -20,9 +22,15 @@ public class Id {
      * @param id1 Id to compare.
      * @return true(id1==Id) or false(id1!==Id).
      */
-    public boolean equals(Id id1){
-        if((id1.getId()).equals(this.getId())) return true;
+    @Override
+    public boolean equals(Object id1){
+        Id id2 = (Id) id1;
+        if((id2.getId()).equals(getId()))return true;
         return false;
+    }
+
+    public Id clone(){
+        return new Id(this.getId());
     }
 
     public String toString(){

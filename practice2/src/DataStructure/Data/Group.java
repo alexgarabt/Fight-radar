@@ -23,11 +23,15 @@ public class Group {
      * @return false id group!=Group.
      */
     public boolean equals(Group group) {
-        if(this.group==group.getGroup()) return true;
+        if(this.group.equals(group.getGroup())) return true;
         return false;
     }
     public void setGroup(String group){
         this.group=group;
+    }
+
+    public Group clone(){
+        return new Group(group);
     }
     public String toString(){
         return group;
