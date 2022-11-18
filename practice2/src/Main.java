@@ -13,10 +13,12 @@ import java.nio.file.*;
  * Main class is in charge to interact with the user of the program,
  * get the inputs, read files, create structures and run the main program.
  *
- * List of users --> HashMap<StringId,DataUser>
- * List of moves --> LinkedList<Moves>
- * List of message --> LinkedList<String>
+ * List of users --> UsersMap(HashMap<String,DataUser>).
+ * List of moves --> LinkedList<Moves>.
+ * List of message --> Messages(LinkedList<String>).
  *
+ * @see Messages
+ * @see UsersMap
  * @see DataStructure.Data.Id
  * @see DataStructure.Data.Position
  * @see DataStructure.Data.Neighbours
@@ -36,15 +38,15 @@ public class Main {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static HashMap<String,DataUser> readInitFile(String filePaht, int numUsers) throws FileNotFoundException, IOException {
+    public static UsersMap readInitFile(String filePaht, int numUsers) throws FileNotFoundException, IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(new File(filePaht)));
-        HashMap<String,DataUser> userList = new HashMap<>(numUsers);
+        UsersMap usersMap = new UsersMap(numUsers);
         for (int i = 0; i <numUsers; i++) {
             DataUser user = new DataUser(br.readLine());
-            userList.put(user.getId().getId(),user);
+            usersMap.addUser(user);
         }
-        return userList;
+        return usersMap;
     }
 
     /**
@@ -67,32 +69,19 @@ public class Main {
     }
 
     /**
-     * Search for the user in the Map with the given unique id identifier.
-     * <p>Efficiency: O(1).
-     *
-     * @param userList Map of users. key=Id of the user, value=DataUser of the user.
-     * @param userId Identifier of the user.
-     * @return The user with these Id.
-     */
-    public static DataUser search(HashMap<String,DataUser> userList, Id userId) {
-        String stringId = userId.getId();
-        if(!userList.containsKey(stringId)){throw new Error("No existe ningún usuario con ese identificador");}
-        return userList.get(stringId);
-    }
-
-    /**
      * Return the users that are in the control zone of the given "user";
      * <p>Efficiency: O(n)
      *
      * @param user The given user.
-     * @param userList A map of all the users.
+     * @param usersMap A map with all the users.
      * @return A Neighbours object with the users in the control zone.
      */
-    public static Neighbours getNeighbours(DataUser user, HashMap<String,DataUser> userList) {
+    public static Neighbours getNeighbours(DataUser user, UsersMap usersMap) {
         Neighbours neighbours = new Neighbours();
         DataUser userTmp;
         //Iterate the Map
-        for(Map.Entry<String,DataUser> set: userList.entrySet()) {// n (Iteration).
+        HashMap<String,DataUser> map = usersMap.getUsersMap();
+        for(Map.Entry<String,DataUser> set: map.entrySet()) {// n (Iteration).
             userTmp = set.getValue();
             if (user.inZone(userTmp) && !(user.getId().equals(userTmp.getId()))) {
                 neighbours.add(userTmp.getId());//O(1)
@@ -102,38 +91,16 @@ public class Main {
     }
 
     /**
-     * Creates the correct message for each case of move.
-     * @param user the user that has moved.
-     * @param userNeighbour the neighbour that enters or exits.
-     * @param typeNeighbour true==(if the neighbour enters), false==(if the neighbour exits)
-     * @return The correct message.
-     */
-    public static String makeMessage(DataUser user, DataUser userNeighbour, boolean typeNeighbour){
-        String message =user.getId().toString();
-
-        if(typeNeighbour){//The userNeighbour enters
-            message=message+"+";
-            if(user.getGroup().equals(userNeighbour.getGroup())) message=message+"=";//Same group.
-            else message=message+"/";//Different group.
-        }
-        else message=message+"-";//The userNeighbour exits.
-
-        message=message+userNeighbour.getId().toString();
-        return message;
-    }
-
-    /**
      * Process the user move os userMoves, makes the correct message for each case
      * and update the neighbours list of userMoves and the other affected users.
-     * <p>Efficiency: O(n*d + d^2)
      *
      * @param userMoves User with the update position.
      * @param newNeighbours actual neighbours of userMoves.
-     * @param userList Map with all the users.
+     * @param usersMap Map with all the users.
      * @param messages List of messages is updated adding the new messages to the end.
      */
     public static void update(DataUser userMoves, Neighbours newNeighbours,
-                              HashMap<String,DataUser> userList, LinkedList<String> messages) {
+                              UsersMap usersMap, Messages messages) {
         Neighbours oldNeighbours = userMoves.getNeighbours();
         Id userId = userMoves.getId();
         DataUser tmpUser;
@@ -143,9 +110,9 @@ public class Main {
         while (iterator.hasNext()) {                                 //O(d)
             tmpId = new Id((String) iterator.next());
             if (!oldNeighbours.isNeighbour(tmpId)) {
-                tmpUser = search(userList, tmpId);                 //O(1)
-                messages.add(makeMessage(userMoves, tmpUser, true)); //O(1)
-                messages.add(makeMessage(tmpUser, userMoves, true)); //O(1)
+                tmpUser = usersMap.search(tmpId);                 //O(1)
+                messages.addMessage(userMoves, tmpUser, true); //O(1)
+                messages.addMessage(tmpUser, userMoves, true); //O(1)
                 tmpUser.getNeighbours().add(userId);//O(1)
             }
             //Worst case O(d++).
@@ -156,9 +123,9 @@ public class Main {
         while (iterator.hasNext()) {                                 //O(d)
             tmpId = new Id((String) iterator.next());
             if (!newNeighbours.isNeighbour(tmpId)) {
-                tmpUser = search(userList, tmpId);                   //O(1)
-                messages.add(makeMessage(userMoves, tmpUser, false)); //O(1)
-                messages.add(makeMessage(tmpUser, userMoves, false)); //O(1)
+                tmpUser = usersMap.search(tmpId);                   //O(1)
+                messages.addMessage(userMoves, tmpUser, false); //O(1)
+                messages.addMessage(tmpUser, userMoves, false); //O(1)
                 tmpUser.getNeighbours().remove(userId);             //O(1)
             }
             //Worst case O(d++).
@@ -173,21 +140,21 @@ public class Main {
      * in the control zone.
      * <p>Efficiency: O(d*n^2 + n*d^2)
      *
-     * @param userList Map of all the users with its old positions.
+     * @param usersMap Map of all the users with its old positions.
      * @param movesList List with the moves of each user and each new position.
      * @return The messages list.
      */
-    public static LinkedList<String> algorithm(HashMap<String,DataUser> userList, LinkedList<Move> movesList) {
-        LinkedList<String> messages = new LinkedList<>();
+    public static Messages algorithm(UsersMap usersMap, LinkedList<Move> movesList) {
+        Messages messages = new Messages();
         for (Move move : movesList) { // n iterations
             Id userId = move.getId();
-            DataUser user = search(userList,userId);// O(1)
+            DataUser user = usersMap.search(userId);// O(1)
             // Move to the new Postion.
             user.move(move); //O(1)
-            Neighbours newNeighbours = getNeighbours(user,userList); //O(n)
+            Neighbours newNeighbours = getNeighbours(user,usersMap); //O(n)
 
             // Makes messages and update neighbours.
-            update(user,newNeighbours,userList,messages); //O(d²)
+            update(user,newNeighbours,usersMap,messages); //O(d²)
             messages.add("---");
             // every iteration: O(n+d²)
         }
@@ -197,9 +164,9 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        HashMap<String,DataUser> userList; // Map of users.
+        UsersMap usersMap;                 // Map of users.
         LinkedList<Move> movesList;        // List of moves
-        LinkedList<String> messages;       // List of messages
+        Messages messages;                 // List of messages
         int n;                             // Number of users
         double d;                          // Total density (person/meter^2).
 
@@ -216,7 +183,7 @@ public class Main {
         d = Double.parseDouble(parts[2]);
         System.out.printf("Parámetros: n = %d, d = %.1f\n", n, d);
 
-        userList = readInitFile(pathFile, n);
+        usersMap = readInitFile(pathFile, n);
 
         System.out.print("Modo [D]epuración o [M]edición? ");
         String mode = in.nextLine().toUpperCase();
@@ -234,19 +201,20 @@ public class Main {
             System.out.println("Procesando...");
 
             long t0 = System.nanoTime();
-            messages = algorithm(userList,movesList);
+            messages = algorithm(usersMap,movesList);
             long t1 = System.nanoTime();
             System.out.printf("Tiempo: %.6f seg.\n", 1e-9 * (t1 - t0));
 
             System.out.print("Quieres guardar los mensajes en un fichero (S/N)? ");
             String save = in.nextLine().toUpperCase();
+            System.out.println();
             if(save.startsWith("S")){
                 // Save the messages in a file.
                 Path file = Paths.get("msgs_" + parts[1] + "_" + parts[2] + "_" + parts[3]);
-                Files.write(file, messages, StandardCharsets.UTF_8);
+                Files.write(file, messages.getMessagesList(), StandardCharsets.UTF_8);
             }
             //If messages arent saved in a file, it will be printed.
-            else for (String i: messages)System.out.println(i);
+            else for (String i: messages.getMessagesList())System.out.println(i);
 
         } else {
             // Mode medition
@@ -255,7 +223,7 @@ public class Main {
             System.out.println("Procesando...");
             movesList = new LinkedList<>();
 
-            for (Map.Entry<String,DataUser> set: userList.entrySet()){
+            for (Map.Entry<String,DataUser> set: usersMap.getUsersMap().entrySet()){
                 DataUser tmpUser = set.getValue();
                 movesList.add(new Move(tmpUser.getId(),tmpUser.getPosition()));
             }
@@ -265,7 +233,7 @@ public class Main {
                 // Makes moves get random values.
                 for (Move mov : movesList) { mov.moveRandom(0.5); } // pos + (-0.5,0.5)
                 long t0 = System.nanoTime();
-                algorithm(userList,movesList);
+                algorithm(usersMap,movesList);
                 long t1 = System.nanoTime();
                 tpo_total += 1e-9 * (t1 - t0);
                 System.out.printf("%.5f\n", 1e-9 * (t1 - t0));

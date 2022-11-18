@@ -18,6 +18,11 @@ public class Move {
         this.id = id;
         this.position=position;
     }
+
+    /**
+     * Creates a Move object using the given string.
+     * @param info == "userID xPosition yPosition"
+     */
     public Move(String info) {
         String[] trozos = info.split(" ");
         id = new Id(trozos[0]);

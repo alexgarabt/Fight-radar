@@ -25,7 +25,7 @@ public class DataUser{
     }
     /**
      * Creates a new user with the information in the userInfo.
-     * @param userInfo = "userId x y group Neighbour1 Neighbour2 ..."
+     * @param userInfo = "userID xPosition yPosition Group neighbour1 neighbour2 ..."
      */
     public DataUser(String userInfo){
         String[] parts = userInfo.split(" ");
@@ -50,8 +50,8 @@ public class DataUser{
     public boolean inZone(DataUser user2){return position.inZone(user2.getPosition());}
 
     /**
-     * Update the user position to the movement postion.
-     * @param movement
+     * Update the user position to the movement position.
+     * @param movement Move object that has the position to move.
      */
     public void move(Move movement){this.position = movement.getPosition();}
 
