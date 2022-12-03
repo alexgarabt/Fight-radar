@@ -76,7 +76,7 @@ public class Main {
      * @param usersMap A map with all the users.
      * @return A Neighbours object with the users in the control zone.
      */
-    public static Neighbours getNeighbours(DataUser user, UsersMap usersMap) {
+    public static Neighbours getNewNeighbours(DataUser user, UsersMap usersMap) {
         Neighbours neighbours = new Neighbours();
         DataUser userTmp;
         //Iterate the Map
@@ -151,7 +151,7 @@ public class Main {
             DataUser user = usersMap.search(userId);// O(1)
             // Move to the new Postion.
             user.move(move); //O(1)
-            Neighbours newNeighbours = getNeighbours(user,usersMap); //O(n)
+            Neighbours newNeighbours = getNewNeighbours(user,usersMap); //O(n)
 
             // Makes messages and update neighbours.
             update(user,newNeighbours,usersMap,messages); //O(d²)

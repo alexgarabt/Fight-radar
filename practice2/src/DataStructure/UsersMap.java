@@ -1,7 +1,6 @@
 package DataStructure;
 import DataStructure.Data.*;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This class has the purpose of store the users
