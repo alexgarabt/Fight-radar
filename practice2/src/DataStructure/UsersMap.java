@@ -1,13 +1,15 @@
 package DataStructure;
 import DataStructure.Data.*;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class has the purpose of store the users
  * and give quick access to DataUser objects using the id.
  *
- * DataStructure HashMap<String,DataUser>.
+ * DataStructure--> HashMap<String,DataUser>.
  * @see DataStructure.DataUser
+ * @version 1.0
  */
 public class UsersMap {
     //usersMap Map of users. key=Id of the user, value=DataUser of the user.
@@ -39,6 +41,26 @@ public class UsersMap {
      * @param user
      */
     public void addUser(DataUser user) {usersMap.put(user.getId().getId(),user);}
+
+    /**
+     * Return the users that are in the control zone of the given "user";
+     * <p>Efficiency: O(n)
+     *
+     * @param user The given user.
+     * @return A Neighbours object with the users in the control zone.
+     */
+    public Neighbours getNewNeighbours(DataUser user) {
+        Neighbours neighbours = new Neighbours();
+        DataUser userTmp;
+        //Iterate the Map
+        for(Map.Entry<String,DataUser> set: usersMap.entrySet()) {// n (Iteration).
+            userTmp = set.getValue();
+            if (user.inZone(userTmp) && !(user.getId().equals(userTmp.getId()))) {
+                neighbours.add(userTmp.getId());//O(1)
+            }
+        }
+        return neighbours;
+    }
 
     public HashMap<String, DataUser> getUsersMap() {return usersMap; }
 

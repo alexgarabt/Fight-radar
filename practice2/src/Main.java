@@ -69,28 +69,6 @@ public class Main {
     }
 
     /**
-     * Return the users that are in the control zone of the given "user";
-     * <p>Efficiency: O(n)
-     *
-     * @param user The given user.
-     * @param usersMap A map with all the users.
-     * @return A Neighbours object with the users in the control zone.
-     */
-    public static Neighbours getNewNeighbours(DataUser user, UsersMap usersMap) {
-        Neighbours neighbours = new Neighbours();
-        DataUser userTmp;
-        //Iterate the Map
-        HashMap<String,DataUser> map = usersMap.getUsersMap();
-        for(Map.Entry<String,DataUser> set: map.entrySet()) {// n (Iteration).
-            userTmp = set.getValue();
-            if (user.inZone(userTmp) && !(user.getId().equals(userTmp.getId()))) {
-                neighbours.add(userTmp.getId());//O(1)
-            }
-        }
-        return neighbours;
-    }
-
-    /**
      * Process the user move os userMoves, makes the correct message for each case
      * and update the neighbours list of userMoves and the other affected users.
      *
@@ -151,7 +129,7 @@ public class Main {
             DataUser user = usersMap.search(userId);// O(1)
             // Move to the new Postion.
             user.move(move); //O(1)
-            Neighbours newNeighbours = getNewNeighbours(user,usersMap); //O(n)
+            Neighbours newNeighbours = usersMap.getNewNeighbours(user); //O(n)
 
             // Makes messages and update neighbours.
             update(user,newNeighbours,usersMap,messages); //O(d²)

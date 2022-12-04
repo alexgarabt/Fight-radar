@@ -1,7 +1,7 @@
 package DataStructure.Data;
 import java.lang.Math;
 /**
- * Position class identify the position of a user in a two-dimensional plane.
+ * Position class identify the position of a point in a two-dimensional euclidean space.
  * Position (x,y).
  * minDistance represents the minimum distance of user.
  * @version 2.0
