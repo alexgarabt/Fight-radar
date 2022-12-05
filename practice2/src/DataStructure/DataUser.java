@@ -16,6 +16,7 @@ public class DataUser{
     private Position position;
     private Neighbours neighbours;
     private Group group;
+    private Point point;//Point in the quadtree map structure.
 
     public DataUser(Id id, Position position, Group group, Neighbours neighbours) {
         this.id=id;
@@ -73,6 +74,14 @@ public class DataUser{
     }
     public Group getGroup(){
         return group;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
     }
 
     public String toString(){

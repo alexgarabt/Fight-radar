@@ -29,6 +29,7 @@ public class Rectangle {
      *         False if the point is outside the rectangle.
      */
     public boolean containsPoint(Position point){
+        if(point==null)return false;
         boolean xIs = xIntersects(point.getPositionX());
         boolean yIs = yIntersects(point.getPositionY());
         return (xIs && yIs);
@@ -64,21 +65,22 @@ public class Rectangle {
      *         False if else.
      */
     public boolean intersectsR(Rectangle rectangleA){
-    Position centerA = rectangleA.getCenter();
-    double heightA = rectangleA.getHeight();
-    double widthA = rectangleA.getWidth();
+        if(rectangleA==null)return false;
+        Position centerA = rectangleA.getCenter();
+        double heightA = rectangleA.getHeight();
+        double widthA = rectangleA.getWidth();
 
-    boolean xAIn = xIntersects((centerA.getPositionX()+(widthA/2))) ||
-                   xIntersects((centerA.getPositionX()-(widthA/2)));
-    boolean xIn = rectangleA.xIntersects((center.getPositionX()+(width/2))) ||
-                  rectangleA.xIntersects((center.getPositionX()-(width/2)));
+        boolean xAIn = xIntersects((centerA.getPositionX()+(widthA/2))) ||
+                xIntersects((centerA.getPositionX()-(widthA/2)));
+        boolean xIn = rectangleA.xIntersects((center.getPositionX()+(width/2))) ||
+                rectangleA.xIntersects((center.getPositionX()-(width/2)));
 
-    boolean yAIn = yIntersects((centerA.getPositionY()+(heightA/2))) ||
-                   yIntersects((centerA.getPositionY()-(heightA/2)));
-    boolean yIn = rectangleA.yIntersects((center.getPositionY()+(height/2))) ||
-                  rectangleA.yIntersects((center.getPositionY()-(height/2)));
+        boolean yAIn = yIntersects((centerA.getPositionY()+(heightA/2))) ||
+                yIntersects((centerA.getPositionY()-(heightA/2)));
+        boolean yIn = rectangleA.yIntersects((center.getPositionY()+(height/2))) ||
+                rectangleA.yIntersects((center.getPositionY()-(height/2)));
 
-    return ((xAIn || xIn) && (yAIn || yIn));
+        return ((xAIn || xIn) && (yAIn || yIn));
     }
 
     public Position getCenter() {
@@ -98,5 +100,9 @@ public class Rectangle {
     }
     public void setWidth(double width) {
         this.width = width;
+    }
+    @Override
+    public String toString(){
+        return "[center="+center.toString()+", height=("+height+"), width=("+width+")]";
     }
 }
