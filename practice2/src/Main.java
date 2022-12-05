@@ -16,6 +16,7 @@ import java.nio.file.*;
  * List of users --> UsersMap(HashMap<String,DataUser>).
  * List of moves --> LinkedList<Moves>.
  * List of message --> Messages(LinkedList<String>).
+ * Tree of Positions --> Quadtree.
  *
  * @see Messages
  * @see UsersMap
@@ -44,9 +45,32 @@ public class Main {
         UsersMap usersMap = new UsersMap(numUsers);
         for (int i = 0; i <numUsers; i++) {
             DataUser user = new DataUser(br.readLine());
+            Point p = new Point(user);
+            user.setPoint(p);
             usersMap.addUser(user);
         }
         return usersMap;
+    }
+
+    /**
+     * Creates the Quadtree Structure with max coordinates and users in usersMap.
+     * @param usersMap Map with all the users.
+     * @return quadtree initialized with all the points.
+     */
+    public static QuadTree initStructures(UsersMap usersMap){
+        double desp=20;
+        Position maxDist = usersMap.maxDistanPos();
+
+        double width=maxDist.getPositionX()+desp;
+        double height=maxDist.getPositionY()+desp;
+        Rectangle r = new Rectangle(new Position(width/2,height/2),height,width);
+        QuadTree quadTree = new QuadTree(r);
+        DataUser tmpUser;
+        for(Map.Entry<String,DataUser> set: usersMap.getUsersMap().entrySet()) {// n (Iteration).
+            tmpUser=set.getValue();
+            quadTree.insert(tmpUser.getPoint());
+        }
+        return quadTree;
     }
 
     /**
@@ -66,6 +90,30 @@ public class Main {
             moves.add(new Move(br.readLine()));
         }
         return moves;
+    }
+    public static Neighbours getNewNeighbours(QuadTree quadTree, UsersMap usersMap, DataUser user){
+        double dist=2*2;
+        //First delete the old position od the user in the quadtree
+        user.getPoint().removePointInList();
+        Point point = new Point(user,user.getPosition());
+        user.setPoint(point);
+        //Insert now the new position of the user.
+        quadTree.insert(point);
+        //Create a rectangle range to search in.
+        Rectangle range = new Rectangle(user.getPosition(),dist,dist);
+        //Search in the quadtree.
+        ArrayList<Point> posibleNeighbours = quadTree.queryRange(range);
+
+        //Look what are real neighbours.
+        DataUser userTmp;
+        Neighbours neighbours = new Neighbours();
+        for(Point p:posibleNeighbours){
+            userTmp = (DataUser) p.getObject();
+            if (user.inZone(userTmp) && !(user.getId().equals(userTmp.getId()))) {
+                neighbours.add(userTmp.getId());//O(1)
+            }
+        }
+        return neighbours;
     }
 
     /**
@@ -122,14 +170,15 @@ public class Main {
      * @param movesList List with the moves of each user and each new position.
      * @return The messages list.
      */
-    public static Messages algorithm(UsersMap usersMap, LinkedList<Move> movesList) {
+    public static Messages algorithm(QuadTree quadTree,UsersMap usersMap, LinkedList<Move> movesList) {
         Messages messages = new Messages();
         for (Move move : movesList) { // n iterations
             Id userId = move.getId();
             DataUser user = usersMap.search(userId);// O(1)
             // Move to the new Postion.
             user.move(move); //O(1)
-            Neighbours newNeighbours = usersMap.getNewNeighbours(user); //O(n)
+            //Neighbours newNeighbours = usersMap.getNewNeighbours(user); //O(n)
+            Neighbours newNeighbours = getNewNeighbours(quadTree,usersMap,user);
 
             // Makes messages and update neighbours.
             update(user,newNeighbours,usersMap,messages); //O(d²)
@@ -143,6 +192,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         UsersMap usersMap;                 // Map of users.
+        QuadTree quadTree;                 // Quadtree that stores positions.
         LinkedList<Move> movesList;        // List of moves
         Messages messages;                 // List of messages
         int n;                             // Number of users
@@ -162,6 +212,7 @@ public class Main {
         System.out.printf("Parámetros: n = %d, d = %.1f\n", n, d);
 
         usersMap = readInitFile(pathFile, n);
+        quadTree = initStructures(usersMap);
 
         System.out.print("Modo [D]epuración o [M]edición? ");
         String mode = in.nextLine().toUpperCase();
@@ -179,7 +230,7 @@ public class Main {
             System.out.println("Procesando...");
 
             long t0 = System.nanoTime();
-            messages = algorithm(usersMap,movesList);
+            messages = algorithm(quadTree,usersMap,movesList);
             long t1 = System.nanoTime();
             System.out.printf("Tiempo: %.6f seg.\n", 1e-9 * (t1 - t0));
 
@@ -211,7 +262,7 @@ public class Main {
                 // Makes moves get random values.
                 for (Move mov : movesList) { mov.moveRandom(0.5); } // pos + (-0.5,0.5)
                 long t0 = System.nanoTime();
-                algorithm(usersMap,movesList);
+                algorithm(quadTree,usersMap,movesList);
                 long t1 = System.nanoTime();
                 tpo_total += 1e-9 * (t1 - t0);
                 System.out.printf("%.5f\n", 1e-9 * (t1 - t0));

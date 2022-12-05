@@ -45,6 +45,12 @@ public class Point{
     public void setObject(Object object) {
         this.object = object;
     }
+    public List<Point> getPointer() {
+        return pointer;
+    }
+    public void setPointer(List<Point> pointer) {
+        this.pointer = pointer;
+    }
 
     @Override
     public String toString() {

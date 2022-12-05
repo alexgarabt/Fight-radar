@@ -43,6 +43,7 @@ public class QuadTree {
         // If there is space in this quadtree and if is a leaf, add the object here.
         if (points.size() < MAX_POINTS && isLeaf()) {
             points.add(point);
+            point.setPointer(points);
             return true;
         }
         // Otherwise, subdivide and then add the point to whichever node will accept it

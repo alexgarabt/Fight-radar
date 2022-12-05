@@ -62,6 +62,25 @@ public class UsersMap {
         return neighbours;
     }
 
+    /**
+     * Return the max distant axes point in the usersMap.
+     * @return
+     */
+    public Position maxDistanPos(){
+        double x=0;
+        double y=0;
+        DataUser userTmp;
+        double tmpX,tmpY;
+        for(Map.Entry<String,DataUser> set: usersMap.entrySet()) {// n (Iteration).
+            userTmp = set.getValue();
+            tmpX= userTmp.getPosition().getPositionX();
+            tmpY= userTmp.getPosition().getPositionY();
+            if(tmpX>x)x=tmpX;
+            if(tmpY>y)y=tmpY;
+        }
+        return new Position(x,y);
+    }
+
     public HashMap<String, DataUser> getUsersMap() {return usersMap; }
 
     public void setUsersMap(HashMap<String, DataUser> usersMap) {this.usersMap = usersMap;}
