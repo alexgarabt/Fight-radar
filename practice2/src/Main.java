@@ -63,7 +63,7 @@ public class Main {
      * @return quadtree initialized with all the points.
      */
     public static QuadTree initStructures(UsersMap usersMap){
-        double desp=20;
+        double desp=50;
         Position maxDist = usersMap.maxDistanPos();
 
         double width=maxDist.getPositionX()+desp;
