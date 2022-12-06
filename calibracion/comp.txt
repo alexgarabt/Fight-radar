@@ -1,6 +1,6 @@
-Teacher code time:					166.815326 seg.
+Teacher code time:					      166.815326 seg.
 My code time without quadtree:		150.176135 seg.
-New Time:							1.379601 seg.
+New Time:							            1.379601   seg.
 
 Uptade: 120.91563140357248
 ===================================================
