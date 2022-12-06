@@ -4,7 +4,6 @@ import DataStructure.Data.*;
 import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
-import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 
@@ -16,7 +15,9 @@ import java.nio.file.*;
  * List of users --> UsersMap(HashMap<String,DataUser>).
  * List of moves --> LinkedList<Moves>.
  * List of message --> Messages(LinkedList<String>).
- * Tree of Positions --> Quadtree.
+ * Tree of Points --> Quadtree.
+ *
+ * @version 3.0
  *
  * @see Messages
  * @see UsersMap
@@ -26,6 +27,10 @@ import java.nio.file.*;
  * @see DataStructure.Data.Group
  * @see DataStructure.DataUser
  * @see DataStructure.Move
+ * @see DataStructure.Point
+ * @see DataStructure.Rectangle
+ * @see DataStructure.QuadTree
+ *
  */
 public class Main {
 
@@ -63,7 +68,9 @@ public class Main {
 
         double width=maxDist.getPositionX()+desp;
         double height=maxDist.getPositionY()+desp;
-        Rectangle r = new Rectangle(new Position(width/2,height/2),height,width);
+        //Map with size in negative max values(-desp,-desp).
+        Rectangle r = new Rectangle(new Position((width/2)-desp,(height/2)-desp),height+desp,width+desp);
+        //Rectangle r = new Rectangle(new Position(0,0),height*2,width*2);
         QuadTree quadTree = new QuadTree(r);
         DataUser tmpUser;
         for(Map.Entry<String,DataUser> set: usersMap.getUsersMap().entrySet()) {// n (Iteration).
@@ -91,18 +98,26 @@ public class Main {
         }
         return moves;
     }
-    public static Neighbours getNewNeighbours(QuadTree quadTree, UsersMap usersMap, DataUser user){
-        double dist=2*2;
-        //First delete the old position od the user in the quadtree
-        user.getPoint().removePointInList();
-        Point point = new Point(user,user.getPosition());
-        user.setPoint(point);
+
+    /**
+     * Return the users that are in the control zone of the given "user";
+     * <p>Efficiency: O(log n)
+     *
+     * @param user The given user.
+     * @param quadTree Tree with all the points
+     * @return A Neighbours object with the users in the control zone.
+     */
+    public static Neighbours getNewNeighbours(QuadTree quadTree, DataUser user){
+        double dist=Position.minDistance*2;
+
         //Insert now the new position of the user.
-        quadTree.insert(point);
+        if(!quadTree.insert(user.getPoint())){
+            System.out.println("Error al insertar la posicion:"+user.getPoint());
+        }
         //Create a rectangle range to search in.
         Rectangle range = new Rectangle(user.getPosition(),dist,dist);
         //Search in the quadtree.
-        ArrayList<Point> posibleNeighbours = quadTree.queryRange(range);
+        ArrayList<Point> posibleNeighbours = quadTree.queryRange(range);//O(log n)+d
 
         //Look what are real neighbours.
         DataUser userTmp;
@@ -168,6 +183,7 @@ public class Main {
      *
      * @param usersMap Map of all the users with its old positions.
      * @param movesList List with the moves of each user and each new position.
+     * @param quadTree Tree synchronized with the Map and has all the positions.
      * @return The messages list.
      */
     public static Messages algorithm(QuadTree quadTree,UsersMap usersMap, LinkedList<Move> movesList) {
@@ -177,16 +193,20 @@ public class Main {
             DataUser user = usersMap.search(userId);// O(1)
             // Move to the new Postion.
             user.move(move); //O(1)
+            //First delete the old position od the user in the quadtree.
+            if(!user.getPoint().removePointInList()){
+             System.out.println("Error al borrar la poscion:"+user.getPoint());
+            }
+            Point point = new Point(user,user.getPosition());
+            user.setPoint(point);
             //Neighbours newNeighbours = usersMap.getNewNeighbours(user); //O(n)
-            Neighbours newNeighbours = getNewNeighbours(quadTree,usersMap,user);
+            Neighbours newNeighbours = getNewNeighbours(quadTree,user);//O(log n)
 
             // Makes messages and update neighbours.
             update(user,newNeighbours,usersMap,messages); //O(d²)
             messages.add("---");
-            // every iteration: O(n+d²)
+            // every iteration: O(log n +d²)
         }
-        // Total complexity: O(n+d).
-        // cte*d*n + O(n*d)
         return messages;
     }
 

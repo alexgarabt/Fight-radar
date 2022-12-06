@@ -1,14 +1,16 @@
 package DataStructure;
 
 import DataStructure.Data.Position;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 /**
  * This class represents a point in the map.
  * Position, object the information that stores the point.
  * And a pointer to the list that stores the point.
+ *
+ * @version 1.0
+ * @see DataStructure.Data.Position;
+ * @see DataUser
  */
 public class Point{
     private Position position;
@@ -19,7 +21,7 @@ public class Point{
         this.object=object;
         this.position=position;
     }
-    public Point(@NotNull DataUser user){
+    public Point(DataUser user){
         this.object = user;
         this.position = user.getPosition();
     }

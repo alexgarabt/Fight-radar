@@ -11,7 +11,7 @@ public class Position {
 
     private double x;
     private double y;
-    private double minDistance = 2;
+    public final static double minDistance = 2;
 
     public Position(double x, double y){
         this.x=x;
@@ -61,5 +61,9 @@ public class Position {
 
     public String toString(){
         return "("+this.x+", "+this.y+")";
+    }
+
+    public double getMinDistance(){
+        return minDistance;
     }
 }

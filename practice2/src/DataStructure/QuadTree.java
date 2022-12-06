@@ -1,5 +1,5 @@
-
 package DataStructure;
+
 import DataStructure.Data.Position;
 import java.util.ArrayList;
 
@@ -9,6 +9,11 @@ import java.util.ArrayList;
  *      S
  *
  * Quadtree structure is used for spatial indexing, stores the positions of the users.
+ * @version 1.0
+ *
+ * @see DataStructure.Data.Position;
+ * @see Point
+ * @see Rectangle
  */
 public class QuadTree {
     // Arbitrary constant to indicate how many elements can be stored in this quad tree node
